@@ -1,6 +1,6 @@
 {
     "name": "amish/stripe-test-clock",
-    "description": "Laravel package for working with stripe test clocks",
+    "description": "Work with stripe test clocks in Laravel",
     "license": "MIT",
     "authors": [
         {
