@@ -5,17 +5,70 @@
 [![Build Status][ico-travis]][link-travis]
 [![StyleCI][ico-styleci]][link-styleci]
 
-This is where your description should go. Take a look at [contributing.md](contributing.md) to see a to do list.
+Work with Stripe test clocks in laravel.
 
 ## Installation
 
 Via Composer
 
 ``` bash
-$ composer require amish/stripe-test-clock
+composer require amish/stripe-test-clock
+```
+
+### Publish config
+```bash
+php artisan vendor:publish --tag "stripe-test-clock.config"
+```
+
+### Run migrations
+```bash
+php artisan migrate
 ```
 
 ## Usage
+
+Create a test clock:
+```bash
+php artisan test-clock:create "Test 1 week trial"
+```
+
+### Assigning test clocks to your customers.
+
+To assign a clock to a customer for testing use the `StripeTestClock::stripeOptions()` method.
+This will add the 'test_clock' key to your array if there is an active clock.
+It will not add the key if 'enabled' is set to false in your config, or if you don't have a clock active.
+
+```php
+use Amish\StripeTestClock\Facades\StripeTestClock;
+
+// using the StripeClient
+$stripe->customers->create(StripeTestClock::stripeOptions([
+    'email' => 'email@example.com',
+    //...
+]));
+
+// Or using cashier
+$user->createAsStripeCustomer(StripeTestClock::options());
+
+```
+
+From there you can work with the clock from the stripe dashboard or using the cli.
+
+```bash
+php artisan test-clock:advance -w 1 # advance the current clock by 1 week
+php artisan test-clock:advance -m 1 -d 4 # advance the current clock by 1 month & 5 days
+php artisan test-clock:advance "2023-07-19" # advance the clock to a specific date.
+```
+
+If a test clock is deleted in stripe or expires you can prune using the `artisan test-clock:prune` command to delete the models. 
+
+
+When testing locally I recommend using the stripe cli to forward webhook events to your app.
+```bash
+stripe listen -f http://localhost/stripe/webhook
+```
+
+
 
 ## Change log
 
@@ -24,7 +77,7 @@ Please see the [changelog](changelog.md) for more information on what has change
 ## Testing
 
 ``` bash
-$ composer test
+composer test
 ```
 
 ## Contributing
