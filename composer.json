@@ -1,0 +1,48 @@
+{
+    "name": "amish/stripe-test-clock",
+    "description": ":package_description",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christian Pavilonis",
+            "email": "_@christians.email",
+            "homepage": "https://amishdev.com"
+        }
+    ],
+    "homepage": "https://github.com/amishdev/stripe-test-clock",
+    "keywords": ["Laravel", "StripeTestClock", "Stripe"],
+    "require": {
+        "illuminate/support": "~9|~10",
+        "stripe/stripe-php": "^7.39"
+    },
+    "require-dev": {
+        "pestphp/pest": "^1.21",
+        "phpunit/phpunit": "~9.0",
+        "orchestra/testbench": "~7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Amish\\StripeTestClock\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Amish\\StripeTestClock\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Amish\\StripeTestClock\\StripeTestClockServiceProvider"
+            ],
+            "aliases": {
+                "StripeTestClock": "Amish\\StripeTestClock\\Facades\\StripeTestClock"
+            }
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
